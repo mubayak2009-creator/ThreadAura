@@ -1,3 +1,11 @@
+// =============================
+// 🔐 PUT YOUR PAYSTACK API HERE
+// =============================
+const PAYSTACK_PUBLIC_KEY = "pk_test_xxxxxxxxxxxxx";
+
+// =============================
+// LOAD CHECKOUT ITEMS
+// =============================
 function loadCheckout() {
     const itemsContainer = document.getElementById("checkout-items");
     const totalEl = document.getElementById("checkout-total");
@@ -10,61 +18,63 @@ function loadCheckout() {
     cart.forEach(item => {
         total += item.price * item.quantity;
         itemsContainer.innerHTML += `
-            <p>${item.title} × ${item.quantity} - $${(item.price * item.quantity).toFixed(2)}</p>
+            <p>${item.title} × ${item.quantity} - GHS ${(item.price * item.quantity).toFixed(2)}</p>
         `;
     });
 
     totalEl.textContent = total.toFixed(2);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    loadCheckout();
+// =============================
+// PAYSTACK PAYMENT FUNCTION
+// =============================
+function payWithPaystack(email, total) {
+    let handler = PaystackPop.setup({
+        key: PAYSTACK_PUBLIC_KEY, // 👈 API USED HERE
+        email: email,
+        amount: total * 100, // convert to pesewas
+        currency: "GHS",
 
-    const paymentSelect = document.getElementById("payment-method");
-    const momoFields = document.getElementById("momo-fields");
-    const momoNetwork = document.getElementById("momo-network");
+        callback: function(response) {
+            // ✅ Payment successful
+            alert("Payment successful! Ref: " + response.reference);
 
-    paymentSelect.addEventListener("change", () => {
-        if (paymentSelect.value === "MTN" || paymentSelect.value === "Vodafone") {
-            momoFields.style.display = "block";
-            momoNetwork.value = paymentSelect.value;
-        } else {
-            momoFields.style.display = "none";
+            // Save reference
+            localStorage.setItem("paymentRef", response.reference);
+
+            // Clear cart
+            localStorage.removeItem("cart");
+
+            // Redirect
+            window.location.href = "success.html";
+        },
+
+        onClose: function() {
+            alert("Payment cancelled");
         }
     });
 
-    document.getElementById("checkout-form").addEventListener("submit", async (e) => {
+    handler.openIframe();
+}
+
+// =============================
+// MAIN LOGIC
+// =============================
+document.addEventListener("DOMContentLoaded", () => {
+    loadCheckout();
+
+    document.getElementById("checkout-form").addEventListener("submit", (e) => {
         e.preventDefault();
 
-        const cart = JSON.parse(localStorage.getItem("cart")) || [];
-        const total = document.getElementById("checkout-total").textContent;
+        const email = e.target.email.value;
+        const total = parseFloat(document.getElementById("checkout-total").textContent);
 
-        const orderData = {
-            name: e.target.name.value,
-            email: e.target.email.value,
-            address: e.target.address.value,
-            payment: e.target.payment.value,
-            momoNetwork: document.getElementById("momo-network").value,
-            momoNumber: document.getElementById("momo-number").value,
-            momoName: document.getElementById("momo-name").value,
-            cart,
-            total
-        };
-
-        const res = await fetch("http://localhost:5000/api/orders", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(orderData)
-        });
-
-        const data = await res.json();
-
-        if (res.ok) {
-            alert("Order placed successfully!");
-            localStorage.removeItem("cart");
-            window.location.href = "index.html";
-        } else {
-            alert(data.message);
+        if (!email || total <= 0) {
+            alert("Invalid payment details");
+            return;
         }
+
+        // 🚀 CALL PAYSTACK
+        payWithPaystack(email, total);
     });
 });
