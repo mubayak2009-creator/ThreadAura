@@ -1,7 +1,7 @@
 // =============================
 // 🔐 PUT YOUR PAYSTACK API HERE
 // =============================
-const PAYSTACK_PUBLIC_KEY = "pk_test_xxxxxxxxxxxxx";
+const PAYSTACK_PUBLIC_KEY = "sk_test_3358600997edb152b12b3b73e394edb2fd2dd4fb";
 
 // =============================
 // LOAD CHECKOUT ITEMS
