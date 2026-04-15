@@ -30,7 +30,7 @@ function loadCheckout() {
 // =============================
 function payWithPaystack(email, total) {
     let handler = PaystackPop.setup({
-        key: PAYSTACK_PUBLIC_KEY, // 👈 API USED HERE
+        key: pk_test_24c54b797ce3bac2726c38ad05851e526c547624, // 👈 API USED HERE
         email: email,
         amount: total * 100, // convert to pesewas
         currency: "GHS",
