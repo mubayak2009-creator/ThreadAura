@@ -35,7 +35,7 @@ function addToCart(productId) {
 
     localStorage.setItem("cart", JSON.stringify(cart));
     updateCartCount();
-    alert(`${product.title} added to cart!`);
+    alert(`₵{product.title} added to cart!`);
 }
 
 
@@ -55,10 +55,10 @@ function displayProducts(containerId, productList) {
         card.className = "product-card";
 
         card.innerHTML = `
-            <img src="${product.image}" alt="${product.title}">
-            <h3>${product.title}</h3>
-            <p>$${product.price}</p>
-            <p class="stars">${stars}</p>
+            <img src="₵{product.image}" alt="₵{product.title}">
+            <h3>₵{product.title}</h3>
+            <p>₵₵{product.price}</p>
+            <p class="stars">₵{stars}</p>
             <button class="add-to-cart-btn">Add to Cart</button>
         `;
 
@@ -117,11 +117,11 @@ function displayCart() {
         const div = document.createElement("div");
         div.className = "cart-item";
         div.innerHTML = `
-            <img src="${item.image}" alt="${item.title}">
+            <img src="₵{item.image}" alt="₵{item.title}">
             <div class="cart-item-details">
-                <h4>${item.title}</h4>
-                <p>Price: $${item.price}</p>
-                <input type="number" min="1" value="${item.quantity}" class="quantity-input">
+                <h4>₵{item.title}</h4>
+                <p>Price: ₵₵{item.price}</p>
+                <input type="number" min="1" value="₵{item.quantity}" class="quantity-input">
                 <button class="remove-btn">Remove</button>
             </div>
         `;
@@ -184,13 +184,13 @@ function displayProductDetails() {
 
     container.innerHTML = `
         <div class="product-details-container">
-            <img src="${product.image}" alt="${product.title}">
+            <img src="₵{product.image}" alt="₵{product.title}">
             <div class="product-info">
                 <h2>${product.title}</h2>
-                <p class="price">$${Number(product.price).toFixed(2)}</p>
-                <p class="stars">${stars}</p>
+                <p class="price">₵₵{Number(product.price).toFixed(2)}</p>
+                <p class="stars">₵{stars}</p>
                 <p>${product.description || "No description available."}</p>
-                <button class="btn" onclick="addToCart(${product.id})">Add to Cart</button>
+                <button class="btn" onclick="addToCart(₵{product.id})">Add to Cart</button>
             </div>
         </div>
     `;
