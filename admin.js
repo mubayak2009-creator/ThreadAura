@@ -18,12 +18,12 @@ function displayProducts() {
         div.className = "product-card";
 
         div.innerHTML = `
-            <img src="${product.image}">
+            <img src="₵{product.image}">
             <h3>${product.title}</h3>
-            <p class="price">$${product.price}</p>
+            <p class="price">₵₵{product.price}</p>
             <p class="stars">
-                ${"★".repeat(Math.floor(product.rating))}
-                ${"☆".repeat(5 - Math.floor(product.rating))}
+                ₵{"★".repeat(Math.floor(product.rating))}
+                ₵{"☆".repeat(5 - Math.floor(product.rating))}
             </p>
             <div class="card-buttons">
                 <button class="edit-btn">Edit</button>
