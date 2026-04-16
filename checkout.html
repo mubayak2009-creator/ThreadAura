@@ -163,7 +163,7 @@ function payWithPaystack() {
 
         callback: function(response) {
             window.location.href =
-                `paymentsuc.html?ref=${response.reference}&name=${name}&amount=${total}`;
+                `paymentsuc.html?ref=₵{response.reference}&name=₵{name}&amount=₵{total}`;
         },
 
         onClose: function() {
