@@ -18,7 +18,7 @@ function loadCheckout() {
     cart.forEach(item => {
         total += item.price * item.quantity;
         itemsContainer.innerHTML += `
-            <p>${item.title} × ${item.quantity} - GHS ${(item.price * item.quantity).toFixed(2)}</p>
+            <p>₵{item.title} × ${item.quantity} - GHS ₵{(item.price * item.quantity).toFixed(2)}</p>
         `;
     });
 
