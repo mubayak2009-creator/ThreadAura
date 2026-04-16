@@ -1,112 +1,43 @@
+<!-- admin-login.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Auth | ThreadAura</title>
-
+<title>Admin Login</title>
 <style>
-body {
-    font-family: Arial;
-    background: #f4f4f4;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-.container {
-    background: white;
-    padding: 20px;
-    width: 300px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
-
-h2 {
-    text-align: center;
-}
-
-input {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-}
-
-button {
-    width: 100%;
-    padding: 10px;
-    margin-top: 15px;
-    background: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-.switch {
-    text-align: center;
-    margin-top: 10px;
-    cursor: pointer;
-    color: blue;
-}
+body { font-family: Arial; text-align:center; margin-top:100px; }
+input, button { padding:10px; margin:5px; width:250px; }
 </style>
 </head>
 
 <body>
 
-<div class="container">
-    <h2 id="title">Admin Login</h2>
+<h2>Admin Login</h2>
 
-    <input type="email" id="email" placeholder="Email">
-    <input type="password" id="password" placeholder="Password">
+<input type="email" id="email" placeholder="Admin Email"><br>
+<input type="password" id="password" placeholder="Password"><br>
 
-    <button onclick="handleAuth()">Login</button>
-
-    <p class="switch" onclick="toggleMode()">Don't have an account? Sign up</p>
-</div>
+<button onclick="login()">Login</button>
 
 <script>
-let isLogin = true;
+// 🔐 CHANGE THIS TO YOUR OWN DETAILS
+const ADMIN_EMAIL = "admin@threadaura.com";
+const ADMIN_PASS = "12345";
 
-function toggleMode() {
-    isLogin = !isLogin;
-    document.getElementById("title").innerText = isLogin ? "Admin Login" : "Admin Signup";
-    document.querySelector("button").innerText = isLogin ? "Login" : "Sign Up";
-    document.querySelector(".switch").innerText =
-        isLogin ? "Don't have an account? Sign up" : "Already have an account? Login";
-}
-
-function handleAuth() {
+function login() {
     const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+    const pass = document.getElementById("password").value;
 
-    if (!email || !password) {
-        alert("Fill all fields");
-        return;
-    }
-
-    if (isLogin) {
-        // LOGIN
-        const savedUser = JSON.parse(localStorage.getItem("admin"));
-
-        if (!savedUser || savedUser.email !== email || savedUser.password !== password) {
-            alert("Invalid login");
-            return;
-        }
-
-        alert("Login successful!");
-        window.location.href = "admin.html";
-
+    if (email === ADMIN_EMAIL && pass === ADMIN_PASS) {
+        localStorage.setItem("adminLoggedIn", true);
+        window.location.href = "admin-dashboard.html";
     } else {
-        // SIGNUP
-        const admin = { email, password };
-        localStorage.setItem("admin", JSON.stringify(admin));
-
-        alert("Account created! Now login.");
-        toggleMode();
+        alert("Wrong admin details");
     }
 }
 </script>
+
+</body>
+</html>
 
 </body>
 </html>
