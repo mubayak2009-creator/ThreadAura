@@ -19,7 +19,7 @@ function displayProducts() {
 
         div.innerHTML = `
             <img src="₵{product.image}">
-            <h3>${product.title}</h3>
+            <h3>₵{product.title}</h3>
             <p class="price">₵₵{product.price}</p>
             <p class="stars">
                 ₵{"★".repeat(Math.floor(product.rating))}
