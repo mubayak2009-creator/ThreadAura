@@ -32,9 +32,9 @@
     const amount = urlParams.get("amount") || "";
     const ref = urlParams.get("ref") || urlParams.get("order") || "";
 
-    document.getElementById("success-message").innerText = `Thank you, ${name}! Your payment of GHS ${amount} via ${method} was successful.`;
+    document.getElementById("success-message").innerText = `Thank you, ₵{name}! Your payment of GHS ₵{amount} via ₵{method} was successful.`;
     if (ref) {
-        document.getElementById("transaction-ref").innerText = `Transaction Reference: ${ref}`;
+        document.getElementById("transaction-ref").innerText = `Transaction Reference: ₵{ref}`;
     }
 
     function goHome() {
